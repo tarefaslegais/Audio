@@ -1,10 +1,21 @@
-
 <!DOCTYPE html>
 <html>
-<body style="background:#000; display:flex; justify-content:center; align-items:center; height:100vh; margin:0;">
-  <audio id="player" src="Entre Todas as Versões.mp3"autoplay controls></audio>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body onclick="tocar()" style="background:#000; color:#fff; font-family:sans-serif; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; margin:0; text-align:center; cursor:pointer;">
+  <div id="btn" style="font-size:28px; padding:30px; border:2px solid #fff; border-radius:16px;">
+    ▶️ Toque na tela para ouvir
+  </div>
+  <audio id="player" src="Entre Todas as Versões.mp3" autoplay></audio>
   <script>
-    document.getElementById('player').play().catch(() => {});
+    const audio = document.getElementById('player');
+    const btn = document.getElementById('btn');
+    audio.play().then(() => { btn.innerText = '🔊 Tocando...'; }).catch(() => {});
+    function tocar() {
+      audio.play();
+      btn.innerText = '🔊 Tocando...';
+    }
   </script>
 </body>
 </html>
