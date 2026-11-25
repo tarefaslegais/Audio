@@ -26,31 +26,45 @@
             padding: 0 15px;
         }
         #botao {
-            width: 170px;
-            height: 215px;
-            background: transparent;
-            border: none;
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            border: 4px solid #1db954;
             padding: 0;
+            background: transparent;
             cursor: pointer;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.15s ease, filter 0.3s ease;
+            box-shadow: 0 10px 30px rgba(29, 185, 84, 0.45);
+            transition: transform 0.15s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             -webkit-tap-highlight-color: transparent;
-            filter: drop-shadow(0 10px 25px rgba(244, 228, 188, 0.2));
+        }
+        #imagem-botao {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         #botao:active {
-            transform: scale(0.93);
+            transform: scale(0.92);
         }
         #botao.tocando {
-            filter: drop-shadow(0 10px 30px rgba(255, 136, 0, 0.55));
-            animation: balancar 1.8s ease-in-out infinite;
+            border-color: #ff5500;
+            box-shadow: 0 10px 35px rgba(255, 85, 0, 0.65);
+            -webkit-animation: pulsar 1.5s infinite;
+            animation: pulsar 1.5s infinite;
         }
-        @keyframes balancar {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-3deg) scale(1.03); }
-            75% { transform: rotate(3deg) scale(1.03); }
-            100% { transform: rotate(0deg) scale(1); }
+        @-webkit-keyframes pulsar {
+            0% { -webkit-transform: scale(1); }
+            50% { -webkit-transform: scale(1.06); }
+            100% { -webkit-transform: scale(1); }
+        }
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
         }
         #texto {
             margin-top: 28px;
@@ -66,90 +80,50 @@
 
     <div id="nome">Karinne Rosalini</div>
 
-    <button id="botao" onclick="alternarAudio()" aria-label="Tocar cordel">
-        <svg viewBox="0 0 160 200" width="100%" height="100%" xmlns="http://w3.org">
-            <!-- Barbante do varal -->
-            <path d="M 5 16 Q 80 26 155 16" stroke="#c89d66" stroke-width="3" fill="none" stroke-linecap="round"/>
-            
-            <!-- Folheto de Cordel -->
-            <rect x="25" y="22" width="110" height="162" rx="3" fill="#f5e6c8" stroke="#1a1a1a" stroke-width="3"/>
-            
-            <!-- Moldura estilo Xilogravura -->
-            <rect x="33" y="30" width="94" height="146" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="5,3"/>
-            
-            <!-- Título no topo do folheto -->
-            <text x="80" y="52" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#1a1a1a" text-anchor="middle" letter-spacing="2">CORDEL</text>
-            <line x1="45" y1="58" x2="115" y2="58" stroke="#1a1a1a" stroke-width="1.5"/>
-
-            <!-- Gravura central (Sol nordestino / cacto estilizado) -->
-            <circle cx="80" cy="95" r="22" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
-            <circle cx="80" cy="95" r="14" fill="#1a1a1a"/>
-            <!-- Raios do sol -->
-            <line x1="80" y1="65" x2="80" y2="70" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="80" y1="120" x2="80" y2="125" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="50" y1="95" x2="55" y2="95" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="105" y1="95" x2="110" y2="95" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="59" y1="74" x2="63" y2="78" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="97" y1="112" x2="101" y2="116" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="101" y1="74" x2="97" y2="78" stroke="#1a1a1a" stroke-width="2"/>
-            <line x1="63" y1="112" x2="59" y2="116" stroke="#1a1a1a" stroke-width="2"/>
-
-            <!-- Ícone Play / Pause embaixo da gravura -->
-            <polygon id="icone-play" points="73,138 73,160 93,149" fill="#1a1a1a"/>
-            <g id="icone-pause" style="display:none;">
-                <rect x="71" y="138" width="6" height="22" fill="#b83b00"/>
-                <rect x="83" y="138" width="6" height="22" fill="#b83b00"/>
-            </g>
-
-            <!-- Pregadores de madeira segurando o cordel -->
-            <rect x="44" y="11" width="8" height="20" rx="1.5" fill="#a86b32" stroke="#1a1a1a" stroke-width="1.5"/>
-            <rect x="108" y="11" width="8" height="20" rx="1.5" fill="#a86b32" stroke="#1a1a1a" stroke-width="1.5"/>
-        </svg>
+    <button id="botao" onclick="alternarAudio()" aria-label="Tocar áudio">
+        <img id="imagem-botao" src="foto.jpg" alt="Toque para ouvir">
     </button>
 
-    <div id="texto">Toque no cordel para ouvir</div>
+    <div id="texto">Toque na imagem para ouvir</div>
 
-    <audio id="player" autoplay></audio>
+    <audio id="player" preload="auto"></audio>
 
     <script>
         // ==========================================
-        // CONFIGURAÇÃO DO ÁUDIO
+        // CONFIGURAÇÃO RÁPIDA (MUDE APENAS AQUI)
         // ==========================================
         const NOME_DA_PESSOA = "Karinne Rosalini"; 
-        const ARQUIVO_AUDIO  = "música um.mp3"; 
+        const ARQUIVO_AUDIO  = "música dois.mp3";
+        const ARQUIVO_IMAGEM = "foto.jpg";
         // ==========================================
 
         document.title = NOME_DA_PESSOA;
         document.getElementById('nome').innerText = NOME_DA_PESSOA;
+        document.getElementById('imagem-botao').src = encodeURI(ARQUIVO_IMAGEM);
 
         const audio = document.getElementById('player');
         audio.src = encodeURI(ARQUIVO_AUDIO);
 
         const botao = document.getElementById('botao');
         const texto = document.getElementById('texto');
-        const iconePlay = document.getElementById('icone-play');
-        const iconePause = document.getElementById('icone-pause');
 
         function atualizarVisual(tocando) {
             if (tocando) {
-                iconePlay.style.display = 'none';
-                iconePause.style.display = 'block';
                 botao.classList.add('tocando');
                 texto.innerText = 'Tocando...';
             } else {
-                iconePlay.style.display = 'block';
-                iconePause.style.display = 'none';
                 botao.classList.remove('tocando');
-                texto.innerText = 'Toque no cordel para ouvir';
+                texto.innerText = 'Toque na imagem para ouvir';
             }
         }
 
-        audio.play().then(() => atualizarVisual(true)).catch(() => atualizarVisual(false));
-
         function alternarAudio() {
             if (audio.paused) {
-                audio.play();
-                atualizarVisual(true);
+                audio.play()
+                    .then(() => atualizarVisual(true))
+                    .catch(() => {
+                        texto.innerText = 'Erro: verifique o arquivo de áudio';
+                    });
             } else {
                 audio.pause();
                 atualizarVisual(false);
@@ -160,3 +134,5 @@
     </script>
 </body>
 </html>
+
+  
