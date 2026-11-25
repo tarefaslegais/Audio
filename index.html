@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Links de Áudio</title>
+    <style>
+        body {
+            background: #0d0d0d;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .cartao {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 14px;
+            padding: 18px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        .titulo-item {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        .botoes {
+            display: flex;
+            gap: 10px;
+        }
+        a.btn-abrir, button.btn-copiar {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        a.btn-abrir {
+            background: #1db954;
+            color: #fff;
+        }
+        button.btn-copiar {
+            background: #333;
+            color: #fff;
+        }
+        button.btn-copiar:active {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Meus Links de Áudio</h1>
+
+    <!-- CARTÃO 1 -->
+    <div class="cartao">
+        <div class="titulo-item">1. Karinne.html</div>
+        <div class="botoes">
+            <a class="btn-abrir" href="Karinne.html" target="_blank">Abrir Página</a>
+            <button class="btn-copiar" onclick="copiarLink('Karinne.html', this)">Copiar Link</button>
+        </div>
+    </div>
+
+    <!-- CARTÃO 2 -->
+    <div class="cartao">
+        <div class="titulo-item">2. musica1.html</div>
+        <div class="botoes">
+            <a class="btn-abrir" href="musica1.html" target="_blank">Abrir Página</a>
+            <button class="btn-copiar" onclick="copiarLink('musica1.html', this)">Copiar Link</button>
+        </div>
+    </div>
+
+    <script>
+        function copiarLink(arquivo, botao) {
+            const urlCompleta = new URL(arquivo, window.location.href).href;
+            navigator.clipboard.writeText(urlCompleta).then(() => {
+                const textoOriginal = botao.innerText;
+                botao.innerText = 'Link Copiado!';
+                botao.style.background = '#ff5500';
+                setTimeout(() => {
+                    botao.innerText = textoOriginal;
+                    botao.style.background = '#333';
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>
