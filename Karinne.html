@@ -75,7 +75,7 @@
     <div id="nome">Karinne Rosalini</div>
 
     <button id="botao" onclick="alternarAudio()" aria-label="Tocar áudio">
-        <img id="imagem-botao" src="./foto.jpg" alt="Toque para ouvir" onerror="tentarOutraImagem(this)">
+        <img id="imagem-botao" src="foto.jpg" alt="Toque para ouvir">
     </button>
 
     <div id="texto">Toque na imagem para ouvir</div>
@@ -84,7 +84,7 @@
 
     <script>
         // ==========================================
-        // CONFIGURAÇÃO RÁPIDA (MUDE APENAS AQUI)
+        // CONFIGURAÇÃO DO ÁUDIO
         // ==========================================
         const NOME_DA_PESSOA = "Karinne Rosalini"; 
         const ARQUIVO_AUDIO  = "música dois.mp3";
@@ -93,19 +93,10 @@
 
         document.title = NOME_DA_PESSOA;
         document.getElementById('nome').innerText = NOME_DA_PESSOA;
-        document.getElementById('imagem-botao').src = "./" + encodeURI(ARQUIVO_IMAGEM);
-
-        function tentarOutraImagem(img) {
-            if (!img.dataset.tentou) {
-                img.dataset.tentou = "true";
-                img.src = "./foto.jpg.jpg";
-            } else {
-                document.getElementById('texto').innerText = 'Erro: imagem não encontrada no GitHub';
-            }
-        }
+        document.getElementById('imagem-botao').src = ARQUIVO_IMAGEM;
 
         const audio = document.getElementById('player');
-        audio.src = "./" + encodeURI(ARQUIVO_AUDIO);
+        audio.src = encodeURI(ARQUIVO_AUDIO);
 
         const botao = document.getElementById('botao');
         const texto = document.getElementById('texto');
