@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karinne Rosalini</title>
+    <style>
+        body {
+            background: #F6EBE6;
+            color: #3D2E2A;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+        #nome {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 0 15px;
+        }
+        #botao {
+            background: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #imagem-botao {
+            max-width: 85vw;
+            max-height: 55vh;
+            width: auto;
+            height: auto;
+            display: block;
+            transition: transform 0.15s ease;
+        }
+        #botao:active #imagem-botao {
+            transform: scale(0.95);
+        }
+        #botao.tocando #imagem-botao {
+            -webkit-animation: pulsar 1.5s infinite;
+            animation: pulsar 1.5s infinite;
+        }
+        @-webkit-keyframes pulsar {
+            0% { -webkit-transform: scale(1); }
+            50% { -webkit-transform: scale(1.04); }
+            100% { -webkit-transform: scale(1); }
+        }
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+        #texto {
+            margin-top: 24px;
+            font-size: 20px;
+            font-weight: 500;
+            color: #6B554E;
+            text-align: center;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nome">Karinne Rosalini</div>
+
+    <button id="botao" onclick="alternarAudio()" aria-label="Tocar áudio">
+        <img id="imagem-botao" src="DR.jpg" alt="Toque para ouvir">
+    </button>
+
+    <div id="texto">Toque na imagem para ouvir</div>
+
+    <audio id="player" preload="auto"></audio>
+
+    <script>
+        // ==========================================
+        // CONFIGURAÇÃO DO ÁUDIO
+        // ==========================================
+        const NOME_DA_PESSOA = "Karinne Rosalini"; 
+        const ARQUIVO_AUDIO  = "RD.mp3";
+        const ARQUIVO_IMAGEM = "DR.jpg";
+        // ==========================================
+
+        document.title = NOME_DA_PESSOA;
+        document.getElementById('nome').innerText = NOME_DA_PESSOA;
+        document.getElementById('imagem-botao').src = ARQUIVO_IMAGEM;
+
+        const audio = document.getElementById('player');
+        audio.src = encodeURI(ARQUIVO_AUDIO);
+
+        const botao = document.getElementById('botao');
+        const texto = document.getElementById('texto');
+
+        function atualizarVisual(tocando) {
+            if (tocando) {
+                botao.classList.add('tocando');
+                texto.innerText = 'Tocando...';
+            } else {
+                botao.classList.remove('tocando');
+                texto.innerText = 'Toque na imagem para ouvir';
+            }
+        }
+
+        function alternarAudio() {
+            if (audio.paused) {
+                audio.play()
+                    .then(() => atualizarVisual(true))
+                    .catch(() => {
+                        texto.innerText = 'Erro ao carregar o áudio';
+                    });
+            } else {
+                audio.pause();
+                atualizarVisual(false);
+            }
+        }
+
+        audio.onended = () => atualizarVisual(false);
+    </script>
+</body>
+</html>
