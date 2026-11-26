@@ -18,9 +18,9 @@
             user-select: none;
         }
         #nome {
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 700;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             letter-spacing: 1px;
             text-align: center;
             padding: 0 15px;
@@ -36,9 +36,9 @@
             -webkit-tap-highlight-color: transparent;
         }
         #imagem-botao {
-            max-width: 85vw;
-            max-height: 55vh;
-            width: auto;
+            width: 340px;       /* Tamanho base maior */
+            max-width: 95vw;    /* Ocupa até 95% da largura da tela no celular */
+            max-height: 70vh;   /* Ocupa até 70% da altura da tela */
             height: auto;
             display: block;
             transition: transform 0.15s ease;
@@ -61,7 +61,7 @@
             100% { transform: scale(1); }
         }
         #texto {
-            margin-top: 24px;
+            margin-top: 16px;
             font-size: 20px;
             font-weight: 500;
             color: #6B554E;
@@ -134,4 +134,3 @@
     </script>
 </body>
 </html>
-
